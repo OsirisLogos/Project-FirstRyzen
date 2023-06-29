@@ -1,0 +1,89 @@
+
+{% include 'header.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({{ post.img_url }})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>{{ post.title }}</h1>
+                            <h2 class="subheading">{{ post.subtitle }}</h2>
+                            <span class="meta">
+                                Posted by
+                                <a href="#!">{{ post.author.name }}</a>
+                                on {{ post.date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                            {{ post.body|safe }}
+                            <hr>
+                            {% if current_user.id == 1: %}
+                                <div class="clearfix">
+                                    <a class="btn btn-primary text-uppercase" href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a>
+                                </div>
+                            {% endif %}
+
+<!--                        Comments Area-->
+<!--                        Load the CKEditor-->
+                            {{ ckeditor.load() }}
+<!--                        Configure the ckeditor with the name of the form field from CommentForm-->
+                            {{ ckeditor.config(name='comment_body') }}
+<!--                        Create the wtf quick_form from CommentForm -->
+                            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+                            <br>
+                            <div class="col-md-10 col-lg-8 col-xl-7 comment">
+                                {% for comment in post.comments: %}
+                                <div class="d-flex flex-start mb-4">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="{{ comment.comment_author.name | gravatar }}" alt="avatar" width="65"
+                                        height="65" />
+                                    <div class="card w-100">
+                                        <div class="card-body p-4">
+                                            <div class="">
+                                                <h5 style="font-size: 0.8em;">{{ comment.comment_author.name }}</h5>
+                                                <p class="small">{{ comment.date }}</p>
+                                                <p class="comment-text">
+                                                    {{ comment.text|safe }}
+                                                </p>
+
+<!--                                                <div class="d-flex justify-content-between align-items-center">-->
+<!--                                                    <div class="d-flex align-items-center">-->
+<!--                                                        <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>-->
+<!--                                                        <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>-->
+<!--                                                    </div>-->
+<!--                                                    <a href="#!" class="link-muted"><i class="fas fa-reply me-1"></i> Reply</a>-->
+<!--                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+<!--                                <ul class="commentList">-->
+<!--                                    <li>-->
+<!--                                        <div class="commenterImage">-->
+<!--                                            <img src="{{ comment.comment_author.email | gravatar }}" >-->
+<!--                                        </div>-->
+<!--                                        <div class="commentText">-->
+<!--                                            <p>{{ comment.text|safe }}</p>-->
+<!--                                            <span class="date sub-text">{{ comment.comment_author.name }}</span>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+                                {% endfor %}
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+{% include 'footer.html' %}

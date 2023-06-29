@@ -1,0 +1,48 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% include 'header.html' %}
+
+<!-- Page Header-->
+    <header class="masthead" style="background-image: url({{ url_for('static', filename='img/controller.jpg') }})">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Register</h1>
+                        <span class="subheading">Let's start writing!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="row">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group">
+                            {{ form.name.label(class="form-control-label") }}
+                            {{ form.name(class="form-control", placeholder="Example: AsgardSon") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.label(class="form-control-label") }}
+                            {{ form.email(class="form-control", placeholder="example@exampleblogs.com") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password.label(class="form-control-label") }}
+                            {{ form.password(class="form-control", placeholder="'123456' is not a strong password.") }}
+                        </div>
+                        <div class="form-group submit-button">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+
+                    <div class="col-md-12 mt-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% include 'footer.html' %}
